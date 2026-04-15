@@ -1,6 +1,15 @@
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+
+const countries = {
+    Cuba: {
+        name: "Cuba"
+    }
+
+}
 
 export const UserForm = () => {
     return (
@@ -18,6 +27,21 @@ export const UserForm = () => {
                     <Label htmlFor="phone">Phone</Label>
                     <Input type="number" id='phone' aria-label="phone" />
                 </div>
+                {/* <div className="flex flex-col gap-2">
+                    <Label htmlFor="country">Country</Label>
+                    <Select>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                {countries.map((country: { name: string}) => {
+                                    <SelectItem value={country.name}>{country.name}</SelectItem>
+                                })}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div> */}
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="address">Address</Label>
                     <Input type="text" id='address' aria-label="address" />
