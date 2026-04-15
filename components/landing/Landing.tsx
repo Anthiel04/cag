@@ -3,7 +3,8 @@ import { Button } from '../ui/button'
 
 export const Landing = () => {
     return (
-        <>
+        <div className="relative flex justify-center w-full">
+
             <Image
                 className="object-center object-cover w-full h-screen mb-12"
                 src="/bg.png"
@@ -33,6 +34,7 @@ export const Landing = () => {
                     </a>
                 </div>
             </section>
-        </>
+        </div>
+
     )
 }
