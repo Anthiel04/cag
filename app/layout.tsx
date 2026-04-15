@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CAG",
+  title: "CAG Community",
   description: "Unofficial Form",
 };
 
