@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { Textarea } from "../ui/textarea"
 
 export const UserForm = () => {
     return (
@@ -46,6 +47,10 @@ export const UserForm = () => {
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="begin">Begin of Journey</Label>
                     <Input type="date" id='begin' aria-label="begin" />
+                </div>
+                <div className="flex flex-col gap-2">
+                    <Label htmlFor="notes">Additional Notes</Label>
+                    <Textarea id='notes' aria-label="notes" />
                 </div>
             </div>
             <Button>Submit</Button>
