@@ -34,7 +34,7 @@ export const UserForm = () => {
         birthday: z.date({ error: "Please fill in your birthday" }),
         phone: z.string({ error: "Please fill in your phone number" }).max(15, { error: "Numbers are not larger than 15 digits including the + and prefix" }), // not z.number()
         country: z.string({ error: "Please select a country" }),
-        address: z.string().min(5).max(64).optional(),
+        address: z.string().min(5, { error: "Address cannot be less than 5 characters" }).max(64, { error: "Address cannot be longer than 64 characters" }).optional(),
         group: z.string().optional(),
         begin: z.date().optional(),
         notes: z.string().max(100).optional(),
