@@ -8,8 +8,7 @@ export default function Home() {
       <Landing />
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between bg-blue-50 sm:items-start mb-12">
         <Description />
-        <section className="mb-12">
-          <p className="mb-12">The fields that have a '*' symbol are mandatory, the rest is optional but if you are able to fill them all that would be pretty helpful</p>
+        <section className="w-full mb-12">
           <UserForm />
         </section>
       </main>
