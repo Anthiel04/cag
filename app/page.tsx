@@ -6,14 +6,14 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans bg-blue-50 text-black">
       <Landing />
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between bg-blue-50 sm:items-start mb-12">
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between bg-blue-50 sm:items-start mb-12 px-4">
         <Description />
         <section className="w-full mb-12">
           <UserForm />
         </section>
       </main>
-      <footer className="bg-blue-100 py-8 w-full flex justify-center">
-        CAG unnoficial 2026
+      <footer className="bg-blue-100 py-8 w-full flex justify-center shadow-3xl ring-4 ring-blue-900">
+        CAG Community Register 2026 (Non Official)
       </footer>
     </div>
   );

@@ -30,14 +30,14 @@ export const UserForm = () => {
     const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(null);
 
     const formSchema = z.object({
-        name: z.string({ error: "Please fill in your full name" }).min(10, { error: "Full Name must have more than 10 characters" }),
+        name: z.string({ error: "Please fill in your full name" }).min(8, { error: "Full Name must have more than 8 characters" }),
         birthday: z.date({ error: "Please fill in your birthday" }),
-        phone: z.string({ error: "Please fill in your phone number" }).max(15, { error: "Numbers are not larger than 15 digits including the + and prefix" }), // not z.number()
-        country: z.string({ error: "Please select a country" }),
-        address: z.string().min(5, { error: "Address cannot be less than 5 characters" }).max(64, { error: "Address cannot be longer than 64 characters" }).optional(),
-        group: z.string().optional(),
-        begin: z.date().optional(),
-        notes: z.string().max(100).optional(),
+        phone: z.string({ error: "Please fill in your phone number" }).max(15, { error: "Numbers are not larger than 15 digits including the + and prefix" }), //Trim spaces and add '+' if it's not present
+        country: z.string({ error: "Please select a country" }), //Default makes it optional
+        address: z.optional(z.string().min(5, { error: "Address cannot be less than 5 characters" }).max(64, { error: "Address cannot be longer than 64 characters" })),
+        group: z.optional(z.string().max(2, { error: "Only two digits" })),
+        begin: z.optional(z.date()),
+        notes: z.optional(z.string().max(100)),
     });
 
     type UserFormValues = z.infer<typeof formSchema>;
@@ -52,20 +52,24 @@ export const UserForm = () => {
             name: "",
             birthday: undefined,
             phone: "",
-            country: "",
+            country: undefined,
             address: "",
             group: undefined,
             begin: undefined,
             notes: "",
         },
     });
-    function onSubmit(data: UserFormValues) {
+    async function onSubmit(data: UserFormValues) {
+        const response = await fetch("/api", {method: "POST", body: JSON.stringify(data)})
+        console.log(response)
+        const log = await response.json()
+        console.log(log)
         toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     }
 
 
     return (
-        <Card className="w-full m-auto sm:max-w-md">
+        <Card className="w-full m-auto sm:max-w-md bg-blue-50 shadow-2xl ring-2">
             <CardHeader>
                 <CardTitle>Register</CardTitle>
                 <CardDescription>
@@ -85,6 +89,7 @@ export const UserForm = () => {
                                     </FieldLabel>
                                     <Input
                                         {...field}
+                                        className="shadow-xl"
                                         id="name"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="John Doe"
@@ -106,6 +111,7 @@ export const UserForm = () => {
                                     </FieldLabel>
                                     <Input
                                         {...field}
+                                        className="shadow-xl"
                                         type="date"
                                         value={field.value ? field.value.toISOString().slice(0, 10) : ""}
                                         onChange={(e) =>
@@ -126,10 +132,11 @@ export const UserForm = () => {
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor="phone">
-                                        Phone Number
+                                        Phone Number *
                                     </FieldLabel>
                                     <Input
                                         {...field}
+                                        className="shadow-xl"
                                         id="phone"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="+12345678910"
@@ -150,7 +157,7 @@ export const UserForm = () => {
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor="country">
-                                        Country
+                                        Country *
                                     </FieldLabel>
                                     <CountryDropdown
                                         placeholder="Country"
@@ -159,6 +166,9 @@ export const UserForm = () => {
                                             field.onChange(country.alpha3);
                                         }}
                                     />
+                                    <FieldDescription className="text-green-700 px-4 py-2">
+                                        Countries are in English
+                                    </FieldDescription>
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
                                     )}
@@ -174,6 +184,7 @@ export const UserForm = () => {
                                         Address
                                     </FieldLabel>
                                     <Input
+                                        className="shadow-xl"
                                         {...field}
                                         id="address"
                                         aria-invalid={fieldState.invalid}
@@ -196,6 +207,7 @@ export const UserForm = () => {
                                     </FieldLabel>
                                     <Input
                                         {...field}
+                                        className="shadow-xl"
                                         id="group"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="Group"
@@ -216,6 +228,7 @@ export const UserForm = () => {
                                         Begin of Journey
                                     </FieldLabel>
                                     <Input
+                                        className="shadow-xl"
                                         {...field}
                                         type="date"
                                         value={field.value ? field.value.toISOString().slice(0, 10) : ""}
@@ -241,7 +254,7 @@ export const UserForm = () => {
                                     <FieldLabel htmlFor="notes">
                                         Additional Notes
                                     </FieldLabel>
-                                    <InputGroup>
+                                    <InputGroup className="shadow-xl">
                                         <InputGroupTextarea
                                             {...field}
                                             id="notes"
@@ -256,7 +269,7 @@ export const UserForm = () => {
                                             </InputGroupText>
                                         </InputGroupAddon>
                                     </InputGroup>
-                                    <FieldDescription>
+                                    <FieldDescription className="px-4 py-2">
                                         The fields that have a '*' symbol are mandatory, the rest is optional but if you are able to fill them all that would be pretty helpful.
                                     </FieldDescription>
                                     {fieldState.invalid && (

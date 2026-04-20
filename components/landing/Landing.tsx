@@ -26,7 +26,7 @@ export const Landing = () => {
                     </p>
                 </article>
                 <div className='flex gap-4 m-auto'>
-                    <a href="#form" className='m-auto flex-1'>
+                    <a href="#cagform" className='m-auto flex-1'>
                         <Button className='md:w-60 md:h-20 text-2xl shadow-sm hover:scale-105 transition-all duration-75'>Register</Button>
                     </a>
                     <a target="_blank" href="https://en.godfootsteps.org/" className='m-auto flex-1'>
