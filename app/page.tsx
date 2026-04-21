@@ -10,7 +10,7 @@ export default function Home() {
       <Landing />
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between bg-blue-50 sm:items-start mb-12 px-4">
             <Representants/>
-            <section className="">
+            <section className="my-12 w-full">
             <CAGNumbers />
             </section>
             <Description />

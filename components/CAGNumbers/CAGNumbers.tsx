@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '../u
 
 export const CAGNumbers = () => {
     return (
-        <div className='flex sm:gap-16 gap-4 flex-col sm:flex-row items-center justify-between w-full mb-12 m-auto rounded-2xl '>
+        <div className='flex sm:gap-16 gap-4 flex-col sm:flex-row content-center justify-center w-full mb-12 rounded-2xl '>
             <Card className='ring-1 w-xs h-48'>
                 <CardHeader className='text-center text-xl sm:text-2xl text-shadow-2xs'>
                     Active Members
