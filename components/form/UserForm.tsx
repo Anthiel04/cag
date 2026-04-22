@@ -1,11 +1,7 @@
 "use client";
-import { countries } from "@/data/countries"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { Textarea } from "../ui/textarea"
-import React from "react";
+import React, { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -25,10 +21,11 @@ import {
 } from "../ui/field";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "../ui/input-group";
+import { Checkbox } from "../ui/checkbox";
 
 export const UserForm = () => {
-    const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(null);
-
+    const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+    const [agree, setIsAgree] = useState<"yes" | "no">("no")
     const formSchema = z.object({
         name: z.string({ error: "Please fill in your full name" }).min(8, { error: "Full Name must have more than 8 characters" }),
         birthday: z.date({ error: "Please fill in your birthday" }),
@@ -38,6 +35,7 @@ export const UserForm = () => {
         group: z.optional(z.string().max(2, { error: "Only two digits" })),
         begin: z.optional(z.date()),
         notes: z.optional(z.string().max(100)),
+        agree: z.string()
     });
 
     type UserFormValues = z.infer<typeof formSchema>;
@@ -57,10 +55,11 @@ export const UserForm = () => {
             group: undefined,
             begin: undefined,
             notes: "",
+            agree: "no"
         },
     });
     async function onSubmit(data: UserFormValues) {
-        const response = await fetch("/api", {method: "POST", body: JSON.stringify(data)})
+        const response = await fetch("/api", { method: "POST", body: JSON.stringify(data) })
         console.log(response)
         const log = await response.json()
         console.log(log)
@@ -209,6 +208,8 @@ export const UserForm = () => {
                                         {...field}
                                         className="shadow-xl"
                                         id="group"
+                                        max={10}
+                                        maxLength={2}
                                         aria-invalid={fieldState.invalid}
                                         placeholder="Group"
                                         autoComplete="off"
@@ -278,6 +279,28 @@ export const UserForm = () => {
                                 </Field>
                             )}
                         />
+                        <Controller
+                            name="agree"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+
+                                <Field>
+                                    <FieldLabel>Agreement</FieldLabel>
+                                    <div className="flex px-2 gap-2 sm:gap-4">
+                                        <Input
+                                            {...field}
+                                            className="size-14"
+                                            type="checkbox"
+                                            value={agree} 
+                                            onClick={() => setIsAgree(agree == "no" ? "yes" : "no")}
+                                        />
+                                        <FieldDescription>
+                                            I do belong to the International Church of Almighty God Number 1 or The Czech Church of Almighty God
+                                        </FieldDescription>
+                                    </div>
+                                </Field>
+                            )}
+                        />
                     </FieldGroup>
                 </form>
             </CardContent>
@@ -286,11 +309,11 @@ export const UserForm = () => {
                     <Button type="button" variant="outline" onClick={() => form.reset()}>
                         Reset
                     </Button>
-                    <Button type="submit" form="cagform">
+                    <Button type="submit" form="cagform" disabled={agree === "no" ? true : false}>
                         Submit
                     </Button>
                 </Field>
             </CardFooter>
-        </Card>
+        </Card >
     )
 }

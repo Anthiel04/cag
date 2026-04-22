@@ -13,10 +13,10 @@ export const Landing = () => {
                 height={1080}
                 priority
             />
-            <div className="bg-gray-200 opacity-75 absolute top-28 p-4 mx-6 rounded-xl">
-                <img src="/logo.svg" alt="logo-CAG" className="" />
-            </div>
-            <section className="absolute self-center bottom-32 flex flex-col mx-12 items-center gap-6 text-center sm:items-start text-white sm:text-left px-2">
+            <section className="absolute self-center flex flex-col mx-12 content-center justify-center items-center gap-6 md:gap-12 text-center sm:items-start text-white sm:text-left px-2">
+                <div className="bg-gray-200 opacity-75 p-4 mx-auto rounded-xl">
+                    <img src="/logo.svg" alt="logo-CAG" className="" />
+                </div>
                 <h1 className="text-2xl leading-tight tracking-tight lg:text-7xl sm:text-3xl md:text-6xl font-semibold  text-center">
                     Community Registration – CAG Members
                 </h1>
